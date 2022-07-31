@@ -1,6 +1,6 @@
 import { Schema, Types, model } from "mongoose";
 
-const blogSchema = new Schema(
+const BlogSchema = new Schema(
     {
         name: { type: String, required: true },
         author: { type: Types.ObjectId, required: true },
@@ -11,4 +11,4 @@ const blogSchema = new Schema(
     { timestamps: true }
 );
 
-export default model("blog", blogSchema);
+export default model("Blog", BlogSchema);

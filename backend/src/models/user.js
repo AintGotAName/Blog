@@ -2,7 +2,7 @@ import { Schema, Types, model } from "mongoose";
 
 const ObjectId = Types.ObjectId;
 
-const userSchema = new Schema({
+const UserSchema = new Schema({
     username: { type: String, required: true },
     hash: { type: String, required: true },
     salt: { type: String, required: true },
@@ -13,4 +13,4 @@ const userSchema = new Schema({
     saved: { type: [ObjectId], required: true },
 });
 
-export default model("user", userSchema);
+export default model("User", UserSchema);
