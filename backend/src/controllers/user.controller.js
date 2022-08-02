@@ -1,4 +1,4 @@
-import { User } from "../models/index.js";
+import { User, Blog } from "../models/index.js";
 import {
     generatePassword,
     issueJWT,
@@ -121,6 +121,8 @@ const updateInfo = async (req, res) => {
     }
 };
 
+// follow another user
+// [PUT]
 const follow = async (req, res) => {
     console.log(`You will following a user!\n`);
     try {
@@ -138,6 +140,29 @@ const follow = async (req, res) => {
         res.status(409).json({
             success: false,
             msg: `Something happened while following another user!`,
+        });
+    }
+};
+
+// save a post
+// [PUT]
+const save = async (req, res) => {
+    console.log(`Saving a post!\n`);
+    try {
+        const post = await Blog.findById(req.body._id);
+        req.user.saved.push(post._id);
+        post.saved += 1;
+        await req.user.save();
+        await post.save();
+        res.status(200).json({
+            success: true,
+            msg: `Save a post successfully!`,
+        });
+    } catch (err) {
+        console.log(`Erroe detected while saving a post!\n`);
+        res.status(409).json({
+            success: false,
+            msg: `Something happend while saving a post!`,
         });
     }
 };
