@@ -99,7 +99,7 @@ const getInfo = async (req, res) => {
 
 // change user's information
 // [PUT]
-const changeInfo = async (req, res) => {
+const updateInfo = async (req, res) => {
     console.log(`Changing user's information!\n`);
     try {
         const user = req.user;
@@ -121,4 +121,4 @@ const changeInfo = async (req, res) => {
     }
 };
 
-export { login, register, getInfo };
+export { login, register, getInfo, updateInfo };
