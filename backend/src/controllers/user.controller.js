@@ -64,7 +64,7 @@ const register = async (req, res) => {
                 following: [],
                 saved: [],
             });
-            newUser.save();
+            await newUser.save();
             const jwt = issueJWT(newUser);
             res.status(201).json({
                 success: true,
@@ -94,6 +94,30 @@ const getInfo = async (req, res) => {
     } catch (err) {
         console.log(`Error detected while getting user's information!\n`);
         res.status(404).json({ success: false, msg: `Cannot found the user!` });
+    }
+};
+
+// change user's information
+// [PUT]
+const changeInfo = async (req, res) => {
+    console.log(`Changing user's information!\n`);
+    try {
+        const user = req.user;
+        const newPassword = generatePassword(req.body.password);
+        user.hash = newPassword.hash;
+        user.salt = newPassword.salt;
+        user.information = req.body.information;
+        await user.save();
+        res.status(200).json({
+            success: true,
+            msg: `Your information is updated successfully!`,
+        });
+    } catch (err) {
+        console.log(`Error detected while updating user!\n`);
+        res.status(409).json({
+            success: false,
+            msg: `Something happend while updating your information!`,
+        });
     }
 };
 
