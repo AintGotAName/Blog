@@ -121,4 +121,25 @@ const updateInfo = async (req, res) => {
     }
 };
 
-export { login, register, getInfo, updateInfo };
+const follow = async (req, res) => {
+    console.log(`You will following a user!\n`);
+    try {
+        const toFollow = await User.findById(req.body.toFollow);
+        req.user.following.push(toFollow._id);
+        toFollow.followers.push(req.user._id);
+        await req.user.save();
+        await toFollow.save();
+        res.status(200).json({
+            success: true,
+            msg: `You have followed a user!`,
+        });
+    } catch (err) {
+        console.log(`Error detected while following a user!\n`);
+        res.status(409).json({
+            success: false,
+            msg: `Something happened while following another user!`,
+        });
+    }
+};
+
+export { login, register, getInfo, updateInfo, follow };
