@@ -3,6 +3,7 @@ import { Schema, Types, model } from "mongoose";
 const BlogSchema = new Schema(
     {
         name: { type: String, required: true },
+        content: { type: String, required: true },
         author: { type: Types.ObjectId, required: true },
         saved: { type: Number, required: true },
         liked: { type: Number, required: true },
