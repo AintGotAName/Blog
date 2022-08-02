@@ -31,12 +31,7 @@ const authenticationMiddleware = async (req, res, next) => {
                 algorithms: "RS256",
             });
             const user = await User.findById(payload._id);
-            if (!user)
-                res.status(403).json({
-                    success: false,
-                    msg: "You have no permission to view this resource!",
-                });
-            next(user);
+            if (user) next(user);
         } catch (err) {
             res.status(403).json({
                 success: false,
@@ -49,6 +44,7 @@ const authenticationMiddleware = async (req, res, next) => {
             msg: "You are not authenticated!",
         });
     }
+    next();
 };
 
 const issueJWT = (user) => {
