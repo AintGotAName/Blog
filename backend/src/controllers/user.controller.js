@@ -81,4 +81,20 @@ const register = async (req, res) => {
     }
 };
 
-export { login, register };
+// get user's information
+// [GET]
+const getInfo = async (req, res) => {
+    try {
+        const user = await User.findOne({ username: req.body.username });
+        res.status(200).json({
+            success: true,
+            msg: `Get user's information successfully!`,
+            user: user,
+        });
+    } catch (err) {
+        console.log(`Error detected while getting user's information!\n`);
+        res.status(404).json({ success: false, msg: `Cannot found the user!` });
+    }
+};
+
+export { login, register, getInfo };
