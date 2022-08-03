@@ -84,6 +84,7 @@ const register = async (req, res) => {
 // get another user's information
 // [GET]
 const getInfo = async (req, res) => {
+    console.log(`Getting user with the username of ${req.params.username}\n`);
     try {
         const user = await User.findOne({ username: req.params.username });
         res.status(200).json({
