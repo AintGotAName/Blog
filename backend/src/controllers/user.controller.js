@@ -81,20 +81,42 @@ const register = async (req, res) => {
     }
 };
 
-// get user's information
+// get another user's information
 // [GET]
 const getInfo = async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username });
+        const user = await User.findOne({ username: req.params.username });
         res.status(200).json({
             success: true,
             msg: `Get user's information successfully!`,
-            user: user,
+            user: {
+                username: user.username,
+                _id: user._id,
+                blogsList: user.blogsList,
+                followers: user.followers,
+                following: user.following,
+            },
         });
     } catch (err) {
         console.log(`Error detected while getting user's information!\n`);
         res.status(404).json({ success: false, msg: `Cannot found the user!` });
     }
+};
+
+// get user's information
+// [GET]
+const myInfo = async (req, res) => {
+    console.log(`Getting my information!\n`);
+    if (req.user)
+        res.status(200).json({
+            success: true,
+            msg: `Get my information successfully`,
+            user: req.user,
+        });
+    res.status(404).json({
+        success: false,
+        msg: `Something happend while getting your information!`,
+    });
 };
 
 // change user's information
@@ -126,7 +148,7 @@ const updateInfo = async (req, res) => {
 const follow = async (req, res) => {
     console.log(`You will following a user!\n`);
     try {
-        const toFollow = await User.findById(req.body.toFollow);
+        const toFollow = await User.findById(req.params._id);
         req.user.following.push(toFollow._id);
         toFollow.followers.push(req.user._id);
         await req.user.save();
@@ -149,7 +171,7 @@ const follow = async (req, res) => {
 const save = async (req, res) => {
     console.log(`Saving a post!\n`);
     try {
-        const post = await Blog.findById(req.body._id);
+        const post = await Blog.findById(req.params.id);
         req.user.saved.push(post._id);
         post.saved += 1;
         await req.user.save();
@@ -167,4 +189,4 @@ const save = async (req, res) => {
     }
 };
 
-export { login, register, getInfo, updateInfo, follow };
+export { login, register, getInfo, myInfo, updateInfo, follow, save };
