@@ -22,14 +22,18 @@ const generatePassword = (password) => {
 };
 
 const authenticationMiddleware = async (req, res, next) => {
-    const token = req.headers.Authorization;
     console.log(`Authentication middleware running\n`);
-
+    const token = req.headers.authorization;
+    console.log(token);
     if (token && token.split(" ")[1].match(/\S+.\S+.\S/)) {
         try {
-            const payload = jwt.verify(token, PUBLIC_KEY, {
-                algorithms: "RS256",
-            });
+            const payload = jwt.verify(
+                token.split(" ")[1],
+                process.env.PUBLIC_KEY,
+                {
+                    algorithms: "RS256",
+                }
+            );
             const user = await User.findById(payload._id);
             if (user) next(user);
         } catch (err) {
@@ -49,7 +53,7 @@ const authenticationMiddleware = async (req, res, next) => {
 
 const issueJWT = (user) => {
     const payload = { _id: user._id, iat: Date.now() };
-    const singedToken = jwt.sign(payload, PRIVATE_KEY, {
+    const singedToken = jwt.sign(payload, process.env.PRIVATE_KEY, {
         expiresIn: "30d",
         algorithm: "RS256",
     });
