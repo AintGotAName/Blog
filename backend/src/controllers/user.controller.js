@@ -95,6 +95,7 @@ const getInfo = async (req, res) => {
                 blogsList: user.blogsList,
                 followers: user.followers,
                 following: user.following,
+                information: user.information,
             },
         });
     } catch (err) {
