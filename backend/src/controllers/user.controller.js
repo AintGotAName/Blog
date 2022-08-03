@@ -113,7 +113,14 @@ const myInfo = async (req, res) => {
         res.status(200).json({
             success: true,
             msg: `Get my information successfully`,
-            user: req.user,
+            user: {
+                username: req.user.username,
+                _id: req.user._id,
+                blogsList: req.user.blogsList,
+                followers: req.user.followers,
+                following: req.user.following,
+                information: req.user.information,
+            },
         });
     res.status(404).json({
         success: false,
