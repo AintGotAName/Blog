@@ -8,7 +8,10 @@ import {
     myInfo,
     updateInfo,
     follow,
+    unfollow,
     save,
+    likePost,
+    create,
 } from "../controllers/user.controller.js";
 
 const UserRouter = Router();
