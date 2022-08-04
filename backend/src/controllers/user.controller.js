@@ -179,15 +179,23 @@ const follow = async (req, res) => {
     console.log(`--- follow ---\nYou will following a user!\n`);
     try {
         const toFollow = await User.findOne({ username: req.params.username });
-        req.user.following.push(toFollow._id);
-        toFollow.followers.push(req.user._id);
-        await req.user.save();
-        await toFollow.save();
-        res.status(200).json({
-            success: true,
-            msg: `You have followed a user!`,
-        });
-        console.log(`--- follow ---\nFollowed a user!\n`);
+        if (req.user.following.includes(toFollow._id)) {
+            res.status(409).json({
+                success: false,
+                msg: `You have already followed this user!`,
+            });
+            console.log(`--- follow ---\nAlready followed!\n`);
+        } else {
+            req.user.following.push(toFollow._id);
+            toFollow.followers.push(req.user._id);
+            await req.user.save();
+            await toFollow.save();
+            res.status(200).json({
+                success: true,
+                msg: `You have followed a user!`,
+            });
+            console.log(`--- follow ---\nFollowed a user!\n`);
+        }
     } catch (err) {
         res.status(409).json({
             success: false,
