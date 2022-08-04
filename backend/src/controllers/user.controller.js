@@ -158,7 +158,7 @@ const updateInfo = async (req, res) => {
 const follow = async (req, res) => {
     console.log(`You will following a user!\n`);
     try {
-        const toFollow = await User.findOne(req.params.username);
+        const toFollow = await User.findOne({ username: req.params.username });
         req.user.following.push(toFollow._id);
         toFollow.followers.push(req.user._id);
         await req.user.save();
