@@ -300,11 +300,11 @@ const unsave = async (req, res) => {
     try {
         const post = await Blog.findById(req.params.id);
         if (
-            req.user.blogsList.some(
+            req.user.saved.some(
                 (savedPost) => savedPost._id.toString() === post._id.toString()
             )
         ) {
-            req.user.blogsList = req.user.blogsList.filter(
+            req.user.saved = req.user.saved.filter(
                 (savedPost) => savedPost._id.toString() === post._id.toString()
             );
             post.saved -= 1;

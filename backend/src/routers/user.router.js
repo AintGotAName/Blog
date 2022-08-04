@@ -26,7 +26,7 @@ UserRouter.post("/login", login)
     .put("/follow/:username", follow)
     .put("/unfollow/:username", unfollow)
     .put("/save/:id", save)
-    .put("unsave/:id", unsave)
+    .put("/unsave/:id", unsave)
     .put("/like/:id", likePost)
     .post("/create", create);
 
