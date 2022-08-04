@@ -17,8 +17,8 @@ const UserSchema = new mongoose.Schema(
             type: [{ _id: ObjectId, username: String }],
             required: true,
         },
-        saved: { type: [ObjectId], required: true },
-        liked: { type: [ObjectId], required: true },
+        saved: { type: [{ _id: ObjectId, name: String }], required: true },
+        liked: { type: [{ _id: ObjectId, name: String }], required: true },
     },
     { versionKey: false }
 );
