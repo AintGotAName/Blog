@@ -180,10 +180,9 @@ const follow = async (req, res) => {
     try {
         const toFollow = await User.findOne({ username: req.params.username });
         if (
-            req.user.following.includes({
-                _id: toFollow._id,
-                username: toFollow.username,
-            })
+            req.user.following.some(
+                (user) => user.username === toFollow.username
+            )
         ) {
             res.status(409).json({
                 success: false,
@@ -225,10 +224,9 @@ const unfollow = async (req, res) => {
             username: req.params.username,
         });
         if (
-            !req.user.following.includes({
-                _id: toUnfollow._id,
-                username: toUnfollow.username,
-            })
+            !req.user.following.some(
+                (user) => user.username === toUnfollow.username
+            )
         ) {
             res.status(409).json({
                 success: false,
@@ -237,10 +235,10 @@ const unfollow = async (req, res) => {
             console.log(`--- unfollow ---\nHaven't followed!\n`);
         } else {
             req.user.following = req.user.following.filter(
-                (following) => following._id !== toUnfollow._id
+                (following) => following.username !== toUnfollow.username
             );
             toUnfollow.followers = toUnfollow.followers.filter(
-                (follower) => follower._id !== req.user._id
+                (follower) => follower.username !== req.user.username
             );
             await req.user.save();
             await toUnfollow.save();
