@@ -122,10 +122,11 @@ const myInfo = async (req, res) => {
                 information: req.user.information,
             },
         });
-    res.status(404).json({
-        success: false,
-        msg: `Something happend while getting your information!`,
-    });
+    else
+        res.status(404).json({
+            success: false,
+            msg: `Something happend while getting your information!`,
+        });
 };
 
 // change user's information
@@ -157,7 +158,7 @@ const updateInfo = async (req, res) => {
 const follow = async (req, res) => {
     console.log(`You will following a user!\n`);
     try {
-        const toFollow = await User.findById(req.params._id);
+        const toFollow = await User.findOne(req.params.username);
         req.user.following.push(toFollow._id);
         toFollow.followers.push(req.user._id);
         await req.user.save();
