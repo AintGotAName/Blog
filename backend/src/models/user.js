@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
     followers: { type: [ObjectId], required: true },
     following: { type: [ObjectId], required: true },
     saved: { type: [ObjectId], required: true },
+    liked: { type: [ObjectId], required: true },
 });
 
 export default mongoose.model("User", UserSchema);
