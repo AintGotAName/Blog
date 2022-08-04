@@ -9,7 +9,7 @@ const BlogSchema = new mongoose.Schema(
         liked: { type: Number, required: true },
         comments: { type: [Array], required: true },
     },
-    { timestamps: true }
+    { timestamps: true, versionKey: false }
 );
 
 export default mongoose.model("Blog", BlogSchema);
