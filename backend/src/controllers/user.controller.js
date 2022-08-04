@@ -364,6 +364,44 @@ const likePost = async (req, res) => {
     }
 };
 
+// unlike a post
+// [PUT]
+const unlike = async (req, res) => {
+    console.log(`--- unlike ---\nUnlike a post!\n`);
+    try {
+        const post = await Blog.findById(req.params.id);
+        if (
+            req.user.liked.some(
+                (likedPost) => likedPost._id.toString() === post._id.toString()
+            )
+        ) {
+            req.user.liked = req.user.liked.filter(
+                (likedPost) => likedPost._id.toString() !== post._id.toString()
+            );
+            post.liked -= 1;
+            await req.user.save();
+            await post.save();
+            res.status(200).json({
+                success: true,
+                msg: `You have unliked a post successfully!`,
+            });
+            console.log(`--- unlike ---\nUnliked!\n`);
+        } else {
+            res.status(409).json({
+                success: false,
+                msg: `You haven't liked the post!`,
+            });
+            console.log(`--- unlike ---\nHaven't liked!\n`);
+        }
+    } catch (err) {
+        res.status(409).json({
+            success: false,
+            msg: `Something happened while trying to unlike a post!`,
+        });
+        console.log(`--- unlike ---\nError!\n`);
+    }
+};
+
 // create a post
 // [POST]
 const create = async (req, res) => {
@@ -404,5 +442,6 @@ export {
     save,
     unsave,
     likePost,
+    unlike,
     create,
 };
