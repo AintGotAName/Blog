@@ -179,15 +179,26 @@ const follow = async (req, res) => {
     console.log(`--- follow ---\nYou will following a user!\n`);
     try {
         const toFollow = await User.findOne({ username: req.params.username });
-        if (req.user.following.includes(toFollow._id)) {
+        if (
+            req.user.following.includes({
+                _id: toFollow._id,
+                username: toFollow.username,
+            })
+        ) {
             res.status(409).json({
                 success: false,
                 msg: `You have already followed this user!`,
             });
             console.log(`--- follow ---\nAlready followed!\n`);
         } else {
-            req.user.following.push(toFollow._id);
-            toFollow.followers.push(req.user._id);
+            req.user.following.push({
+                _id: toFollow._id,
+                username: toFollow.username,
+            });
+            toFollow.followers.push({
+                _id: req.user._id,
+                username: req.user.username,
+            });
             await req.user.save();
             await toFollow.save();
             res.status(200).json({
@@ -213,7 +224,12 @@ const unfollow = async (req, res) => {
         const toUnfollow = await User.findOne({
             username: req.params.username,
         });
-        if (!req.user.following.includes(toUnfollow._id)) {
+        if (
+            !req.user.following.includes({
+                _id: toUnfollow._id,
+                username: toUnfollow.username,
+            })
+        ) {
             res.status(409).json({
                 success: false,
                 msg: `You haven't followed this user!`,
@@ -221,10 +237,10 @@ const unfollow = async (req, res) => {
             console.log(`--- unfollow ---\nHaven't followed!\n`);
         } else {
             req.user.following = req.user.following.filter(
-                (id) => id !== toUnfollow._id
+                (following) => following._id !== toUnfollow._id
             );
-            toUnfollow.followers = toUnfollow.follower.filter(
-                (id) => id !== req.user._id
+            toUnfollow.followers = toUnfollow.followers.filter(
+                (follower) => follower._id !== req.user._id
             );
             await req.user.save();
             await toUnfollow.save();

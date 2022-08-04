@@ -8,8 +8,8 @@ const UserSchema = new mongoose.Schema({
     salt: { type: String, required: true },
     information: { type: Object, required: true },
     blogsList: { type: [ObjectId], required: true },
-    followers: { type: [ObjectId], required: true },
-    following: { type: [ObjectId], required: true },
+    followers: { type: [{ _id: ObjectId, username: String }], required: true },
+    following: { type: [{ _id: ObjectId, username: String }], required: true },
     saved: { type: [ObjectId], required: true },
     liked: { type: [ObjectId], required: true },
 });
