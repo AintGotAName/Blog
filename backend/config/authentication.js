@@ -24,7 +24,6 @@ const generatePassword = (password) => {
 const authenticationMiddleware = async (req, res, next) => {
     console.log(`Authentication middleware running\n`);
     const token = req.headers.authorization;
-    console.log(token);
     if (token && token.split(" ")[1].match(/\S+.\S+.\S/)) {
         try {
             const payload = jwt.verify(
