@@ -339,6 +339,8 @@ const create = async (req, res) => {
         newPost.liked = 0;
         newPost.comments = [];
         await newPost.save();
+        req.user.blogsList.push({ _id: newPost._id, name: newPost.name });
+        await req.user.save();
         res.status(201).json({
             success: true,
             msg: `New post created successfully!`,
