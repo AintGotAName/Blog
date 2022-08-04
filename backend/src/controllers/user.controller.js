@@ -199,4 +199,24 @@ const save = async (req, res) => {
     }
 };
 
-export { login, register, getInfo, myInfo, updateInfo, follow, save };
+// like a post
+// [PUT]
+const likePost = async (req, res) => {
+    console.log(`Like a post!\n`);
+    try {
+        const post = await Blog.findById(req.params.id);
+        req.user.liked.push(post._id);
+        post.liked += 1;
+        await req.user.save();
+        await post.save();
+        res.status(200).json({ success: true, msg: `You liked a post!` });
+    } catch (err) {
+        console.log(`Error detected while trying to like a post!\n`);
+        res.status(409).json({
+            success: false,
+            msg: `Something happened while trying to like a post!`,
+        });
+    }
+};
+
+export { login, register, getInfo, myInfo, updateInfo, follow, save, likePost };
