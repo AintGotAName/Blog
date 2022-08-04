@@ -3,9 +3,6 @@ import jwt from "jsonwebtoken";
 
 import { User } from "../src/models/index.js";
 
-const PUBLIC_KEY = process.env.PUBLIC_KEY;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-
 const validatePassword = (password, hash, salt) => {
     console.log(`validatePassword(password, hash, salt): Cheking password!\n`);
     const res =
