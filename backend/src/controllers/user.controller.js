@@ -135,15 +135,22 @@ const updateInfo = async (req, res) => {
     console.log(`Changing user's information!\n`);
     try {
         const user = req.user;
-        const newPassword = generatePassword(req.body.password);
-        user.hash = newPassword.hash;
-        user.salt = newPassword.salt;
-        user.information = req.body.information;
-        await user.save();
-        res.status(200).json({
-            success: true,
-            msg: `Your information is updated successfully!`,
-        });
+        if (validatePassword(req.body.currentPassword, user.hash, user.salt)) {
+            const newPassword = generatePassword(req.body.newPassword);
+            user.hash = newPassword.hash;
+            user.salt = newPassword.salt;
+            user.information = req.body.information;
+            await user.save();
+            res.status(200).json({
+                success: true,
+                msg: `Your information is updated successfully!`,
+            });
+        } else {
+            res.status(409).json({
+                success: false,
+                msg: `Your password is incorrect!`,
+            });
+        }
     } catch (err) {
         console.log(`Error detected while updating user!\n`);
         res.status(409).json({
