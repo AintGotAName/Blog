@@ -1,9 +1,12 @@
 const connectDatabase = async (mongoose, connection) => {
+    console.log(`--- connectDatabase ---\nConnecting database!\n`);
     try {
         await mongoose.connect(connection);
-        console.log(`Database connected successfully at ${connection}\n`);
+        console.log(
+            `--- connectDatabase ---\nDatabase connected: ${connection}\n`
+        );
     } catch (err) {
-        console.log(`Error detected while connecting to database!\n`);
+        console.log(`--- connectDatabase ---\nError!\n`);
     }
 };
 

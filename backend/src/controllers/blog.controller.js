@@ -3,6 +3,7 @@ import { Blog } from "../models/index.js";
 // get a specific blog
 // [GET]
 const getBlog = async (req, res) => {
+    console.log(`--- getBlog ---\nGetting blog!\n`);
     try {
         const blog = await Blog.findById(req.params._id);
         if (blog) {
@@ -11,20 +12,20 @@ const getBlog = async (req, res) => {
                 msg: `Get the blog successfully!`,
                 data: blog,
             });
-            console.log(`Get the blog successfully!\n`);
+            console.log(`--- getBlog ---\nGot the blog!\n`);
         } else {
             res.status(404).json({
                 success: false,
                 msg: `Cannot find the blog, maybe it hasn't been created yet!`,
             });
-            console.log(`There is no blog with the given _id!\n`);
+            console.log(`--- getBlog ---\nBlog not found!\n`);
         }
     } catch (err) {
-        console.log(`Error detected while getting the blog!\n`);
         res.status(404).json({
             success: false,
             msg: `Something happened while getting the blog, please try again!`,
         });
+        console.log(`--- getBlog ---\nError!\n`);
     }
 };
 
