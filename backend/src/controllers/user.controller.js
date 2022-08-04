@@ -176,6 +176,42 @@ const follow = async (req, res) => {
     }
 };
 
+// unfollow another user
+// [PUT]
+const unfollow = async (req, res) => {
+    console.log(`You will unfollow a user!\n`);
+    try {
+        const toUnfollow = await User.findOne({
+            username: req.params.username,
+        });
+        if (!req.user.following.includes(toUnfollow._id))
+            res.status(409).json({
+                success: false,
+                msg: `You haven't followed this user!`,
+            });
+        else {
+            req.user.following = req.user.following.filter(
+                (id) => id !== toUnfollow._id
+            );
+            toUnfollow.followers = toUnfollow.follower.filter(
+                (id) => id !== req.user._id
+            );
+            await req.user.save();
+            await toUnfollow.save();
+            res.status(200).json({
+                success: true.valueOf,
+                msg: `You have unfollowed a user successfully!`,
+            });
+        }
+    } catch (err) {
+        console.log(`Error detected while unfollowing a user!\n`);
+        res.status(409).json({
+            success: false,
+            msg: `Something happened while unfollowing a user!`,
+        });
+    }
+};
+
 // save a post
 // [PUT]
 const save = async (req, res) => {
@@ -252,6 +288,7 @@ export {
     myInfo,
     updateInfo,
     follow,
+    unfollow,
     save,
     likePost,
     create,
