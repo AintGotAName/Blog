@@ -6,6 +6,7 @@ import {
     authenticationMiddleware,
     issueJWT,
 } from "./authentication.js";
+import { useMiddlewares } from "./app.js";
 
 export {
     connectDatabase,
@@ -14,4 +15,5 @@ export {
     generatePassword,
     authenticationMiddleware,
     issueJWT,
+    useMiddlewares,
 };
