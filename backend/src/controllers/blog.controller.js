@@ -1,6 +1,7 @@
 import { Blog } from "../models/index.js";
 
 class BlogController {
+    // get a specific blog
     // [GET]
     async getBlog(req, res) {
         try {
