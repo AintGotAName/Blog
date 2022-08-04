@@ -293,6 +293,44 @@ const save = async (req, res) => {
     }
 };
 
+// unsave a post
+// [PUT]
+const unsave = async (req, res) => {
+    console.log(`--- unsave ---\nUnsaving a post!\n`);
+    try {
+        const post = await Blog.findById(req.params.id);
+        if (
+            req.user.blogsList.some(
+                (savedPost) => savedPost._id.toString() === post._id.toString()
+            )
+        ) {
+            req.user.blogsList = req.user.blogsList.filter(
+                (savedPost) => savedPost._id.toString() === post._id.toString()
+            );
+            post.saved -= 1;
+            await req.user.save();
+            await post.save();
+            res.status(200).json({
+                success: true,
+                msg: `You have unsaved a post successfully!`,
+            });
+            console.log(`--- unsave ---\nUnsaved!\n`);
+        } else {
+            res.status(409).json({
+                success: false,
+                msg: `You haven't saved this post!`,
+            });
+            console.log(`--- unsave ---\nHaven't saved!\n`);
+        }
+    } catch (err) {
+        res.status(409).json({
+            success: false,
+            msg: `Something happened while unsaving the post!`,
+        });
+        console.log(`--- unsave ---\nError!\n`);
+    }
+};
+
 // like a post
 // [PUT]
 const likePost = async (req, res) => {
@@ -364,6 +402,7 @@ export {
     follow,
     unfollow,
     save,
+    unsave,
     likePost,
     create,
 };
