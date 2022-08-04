@@ -8,27 +8,30 @@ import {
 // login
 // [POST]
 const login = async (req, res) => {
-    console.log(`Authenticating user!\n`);
+    console.log(`--- login ---\nLogging in!\n`);
     try {
         const user = await User.findOne({ username: req.body.username });
-        if (!user)
+        if (!user) {
             res.status(401).json({
                 success: false,
                 msg: `There is no user with the given username!`,
             });
-        else {
-            if (!validatePassword(req.body.password, user.hash, user.salt))
+            console.log(`--- login ---\nWrong username!\n`);
+        } else {
+            if (!validatePassword(req.body.password, user.hash, user.salt)) {
                 res.status(403).json({
                     success: false,
                     msg: `Your password is incorrect, please try again!`,
                 });
-            else {
+                console.log(`--- login ---\nWrong password!\n`);
+            } else {
                 const jwt = issueJWT(user);
                 res.status(200).json({
                     success: true,
                     msg: `You are authenticated!`,
                     token: jwt,
                 });
+                console.log(`--- login ---\nLogged in!\n`);
             }
         }
     } catch (err) {
@@ -36,23 +39,24 @@ const login = async (req, res) => {
             success: false,
             msg: `Something happend while identifying you!`,
         });
-        console.log(`Error detected while authenticating user!\n`);
+        console.log(`--- login ---\nError\n`);
     }
 };
 
 // register
 // [POST]
 const register = async (req, res) => {
-    console.log("Registering new user!\n");
+    console.log("--- register ---\nRegistering!\n");
     try {
         const username = req.body.username;
         const user = await User.findOne({ username: username });
-        if (user)
+        if (user) {
             res.status(409).json({
                 success: false,
                 msg: `There is a user with the given username, please try another username!`,
             });
-        else {
+            console.log(`--- register ---\nUser found!\n`);
+        } else {
             const password = generatePassword(req.body.password);
             const newUser = new User({
                 username: username,
@@ -71,20 +75,23 @@ const register = async (req, res) => {
                 msg: `New user created successfully!`,
                 token: jwt,
             });
+            console.log(`--- register ---\nRegistered!\n`);
         }
     } catch (err) {
-        console.log(`Error detected while creating new user!\n`);
         res.status(401).json({
             success: false,
             msg: `Something happend while registering new user!`,
         });
+        console.log(`--- register ---\nError!\n`);
     }
 };
 
 // get another user's information
 // [GET]
 const getInfo = async (req, res) => {
-    console.log(`Getting user with the username of ${req.params.username}\n`);
+    console.log(
+        `--- getInfo ---\nGetting user with username: ${req.params.username}\n`
+    );
     try {
         const user = await User.findOne({ username: req.params.username });
         res.status(200).json({
@@ -99,17 +106,18 @@ const getInfo = async (req, res) => {
                 information: user.information,
             },
         });
+        console.log(`--- getInfo ---\nUser found!\n`);
     } catch (err) {
-        console.log(`Error detected while getting user's information!\n`);
         res.status(404).json({ success: false, msg: `Cannot found the user!` });
+        console.log(`--- getInfo ---\nError!\n`);
     }
 };
 
 // get user's information
 // [GET]
 const myInfo = async (req, res) => {
-    console.log(`Getting my information!\n`);
-    if (req.user)
+    console.log(`--- myInfo ---\nGetting my information!\n`);
+    if (req.user) {
         res.status(200).json({
             success: true,
             msg: `Get my information successfully`,
@@ -122,17 +130,20 @@ const myInfo = async (req, res) => {
                 information: req.user.information,
             },
         });
-    else
+        console.log(`--- myInfo ---\nFound my information!\n`);
+    } else {
         res.status(404).json({
             success: false,
             msg: `Something happend while getting your information!`,
         });
+        console.log(`--- myInfo ---\nError!\n`);
+    }
 };
 
 // change user's information
 // [PUT]
 const updateInfo = async (req, res) => {
-    console.log(`Changing user's information!\n`);
+    console.log(`--- updateInfo ---\nChanging my information!\n`);
     try {
         const user = req.user;
         if (validatePassword(req.body.currentPassword, user.hash, user.salt)) {
@@ -145,25 +156,27 @@ const updateInfo = async (req, res) => {
                 success: true,
                 msg: `Your information is updated successfully!`,
             });
+            console.log(`--- updateInfo ---\nInformation updated!\n`);
         } else {
             res.status(409).json({
                 success: false,
                 msg: `Your password is incorrect!`,
             });
+            console.log(`--- updateInfo ---\nWrong password!\n`);
         }
     } catch (err) {
-        console.log(`Error detected while updating user!\n`);
         res.status(409).json({
             success: false,
             msg: `Something happend while updating your information!`,
         });
+        console.log(`--- updateInfo ---\nError!\n`);
     }
 };
 
 // follow another user
 // [PUT]
 const follow = async (req, res) => {
-    console.log(`You will following a user!\n`);
+    console.log(`--- follow ---\nYou will following a user!\n`);
     try {
         const toFollow = await User.findOne({ username: req.params.username });
         req.user.following.push(toFollow._id);
@@ -174,29 +187,31 @@ const follow = async (req, res) => {
             success: true,
             msg: `You have followed a user!`,
         });
+        console.log(`--- follow ---\nFollowed a user!\n`);
     } catch (err) {
-        console.log(`Error detected while following a user!\n`);
         res.status(409).json({
             success: false,
             msg: `Something happened while following another user!`,
         });
+        console.log(`--- follow ---\nError!\n`);
     }
 };
 
 // unfollow another user
 // [PUT]
 const unfollow = async (req, res) => {
-    console.log(`You will unfollow a user!\n`);
+    console.log(`--- unfollow ---\nYou will unfollow a user!\n`);
     try {
         const toUnfollow = await User.findOne({
             username: req.params.username,
         });
-        if (!req.user.following.includes(toUnfollow._id))
+        if (!req.user.following.includes(toUnfollow._id)) {
             res.status(409).json({
                 success: false,
                 msg: `You haven't followed this user!`,
             });
-        else {
+            console.log(`--- unfollow ---\nHaven't followed!\n`);
+        } else {
             req.user.following = req.user.following.filter(
                 (id) => id !== toUnfollow._id
             );
@@ -209,20 +224,21 @@ const unfollow = async (req, res) => {
                 success: true.valueOf,
                 msg: `You have unfollowed a user successfully!`,
             });
+            console.log(`--- unfollow ---\nUnfollowed\n`);
         }
     } catch (err) {
-        console.log(`Error detected while unfollowing a user!\n`);
         res.status(409).json({
             success: false,
             msg: `Something happened while unfollowing a user!`,
         });
+        console.log(`--- unfollow ---\nError!\n`);
     }
 };
 
 // save a post
 // [PUT]
 const save = async (req, res) => {
-    console.log(`Saving a post!\n`);
+    console.log(`--- save ---\nSaving a post!\n`);
     try {
         const post = await Blog.findById(req.params.id);
         req.user.saved.push(post._id);
@@ -233,19 +249,20 @@ const save = async (req, res) => {
             success: true,
             msg: `Save a post successfully!`,
         });
+        console.log(`--- save ---\nSaved!\n`);
     } catch (err) {
-        console.log(`Erroe detected while saving a post!\n`);
         res.status(409).json({
             success: false,
             msg: `Something happend while saving a post!`,
         });
+        console.log(`--- save ---\nError!\n`);
     }
 };
 
 // like a post
 // [PUT]
 const likePost = async (req, res) => {
-    console.log(`Like a post!\n`);
+    console.log(`--- like ---\nLike a post!\n`);
     try {
         const post = await Blog.findById(req.params.id);
         req.user.liked.push(post._id);
@@ -253,19 +270,20 @@ const likePost = async (req, res) => {
         await req.user.save();
         await post.save();
         res.status(200).json({ success: true, msg: `You liked a post!` });
+        console.log(`--- like ---\nLiked!\n`);
     } catch (err) {
-        console.log(`Error detected while trying to like a post!\n`);
         res.status(409).json({
             success: false,
             msg: `Something happened while trying to like a post!`,
         });
+        console.log(`--- like ---\nError!\n`);
     }
 };
 
 // create a post
 // [POST]
 const create = async (req, res) => {
-    console.log(`Creating new post!\n`);
+    console.log(`--- create ---\nCreating new post!\n`);
     try {
         const newPost = new Blog();
         newPost.name = req.body.name;
@@ -279,12 +297,13 @@ const create = async (req, res) => {
             success: true,
             msg: `New post created successfully!`,
         });
+        console.log(`--- create ---\nCreated!\n`);
     } catch (err) {
-        console.log(`Error detected while creating new post!\n`);
         res.status(409).json({
             success: false,
             msg: `Something happened while creating new post!`,
         });
+        console.log(`--- create ---\nError!\n`);
     }
 };
 
