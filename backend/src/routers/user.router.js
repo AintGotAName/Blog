@@ -23,6 +23,7 @@ UserRouter.post("/login", login)
     .get("/", myInfo)
     .put("/", updateInfo)
     .put("/:username", follow)
+    .put("/unfollow", unfollow)
     .put("/:id", save);
 
 export default UserRouter;
