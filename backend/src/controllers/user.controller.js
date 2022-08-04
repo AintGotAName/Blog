@@ -219,4 +219,40 @@ const likePost = async (req, res) => {
     }
 };
 
-export { login, register, getInfo, myInfo, updateInfo, follow, save, likePost };
+// create a post
+// [POST]
+const create = async (req, res) => {
+    console.log(`Creating new post!\n`);
+    try {
+        const newPost = new Blog();
+        newPost.name = req.body.name;
+        newPost.content = req.body.content;
+        newPost.author = req.user.username;
+        newPost.saved = 0;
+        newPost.liked = 0;
+        newPost.comments = [];
+        await newPost.save();
+        res.status(201).json({
+            success: true,
+            msg: `New post created successfully!`,
+        });
+    } catch (err) {
+        console.log(`Error detected while creating new post!\n`);
+        res.status(409).json({
+            success: false,
+            msg: `Something happened while creating new post!`,
+        });
+    }
+};
+
+export {
+    login,
+    register,
+    getInfo,
+    myInfo,
+    updateInfo,
+    follow,
+    save,
+    likePost,
+    create,
+};
