@@ -22,8 +22,8 @@ UserRouter.post("/login", login)
     .use("/", authenticationMiddleware)
     .get("/", myInfo)
     .put("/", updateInfo)
-    .put("/:username", follow)
-    .put("/unfollow", unfollow)
-    .put("/:id", save);
+    .put("/follow/:username", follow)
+    .put("/unfollow/:username", unfollow)
+    .put("/save/:id", save);
 
 export default UserRouter;
