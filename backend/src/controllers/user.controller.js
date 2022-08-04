@@ -263,15 +263,27 @@ const save = async (req, res) => {
     console.log(`--- save ---\nSaving a post!\n`);
     try {
         const post = await Blog.findById(req.params.id);
-        req.user.saved.push(post._id);
-        post.saved += 1;
-        await req.user.save();
-        await post.save();
-        res.status(200).json({
-            success: true,
-            msg: `Save a post successfully!`,
-        });
-        console.log(`--- save ---\nSaved!\n`);
+        if (
+            req.user.saved.some(
+                (savedPost) => savedPost._id.toString() === post._id.toString()
+            )
+        ) {
+            res.status(409).json({
+                success: false,
+                msg: `You have already saved this post!`,
+            });
+            console.log(`--- save ---\nAlready saved!\n`);
+        } else {
+            req.user.saved.push({ _id: post._id, name: post.name });
+            post.saved += 1;
+            await req.user.save();
+            await post.save();
+            res.status(200).json({
+                success: true,
+                msg: `Save a post successfully!`,
+            });
+            console.log(`--- save ---\nSaved!\n`);
+        }
     } catch (err) {
         res.status(409).json({
             success: false,
@@ -287,12 +299,24 @@ const likePost = async (req, res) => {
     console.log(`--- like ---\nLike a post!\n`);
     try {
         const post = await Blog.findById(req.params.id);
-        req.user.liked.push(post._id);
-        post.liked += 1;
-        await req.user.save();
-        await post.save();
-        res.status(200).json({ success: true, msg: `You liked a post!` });
-        console.log(`--- like ---\nLiked!\n`);
+        if (
+            req.user.liked.some(
+                (likedPost) => likedPost._id.toString() === post._id.toString()
+            )
+        ) {
+            res.status(409).json({
+                success: false,
+                msg: `You have already liked this post!`,
+            });
+            console.log(`--- like ---\nAlready liked!\n`);
+        } else {
+            req.user.liked.push({ _id: post._id, name: post.name });
+            post.liked += 1;
+            await req.user.save();
+            await post.save();
+            res.status(200).json({ success: true, msg: `You liked a post!` });
+            console.log(`--- like ---\nLiked!\n`);
+        }
     } catch (err) {
         res.status(409).json({
             success: false,
