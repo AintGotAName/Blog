@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
         hash: { type: String, required: true },
         salt: { type: String, required: true },
         information: { type: Object, required: true },
-        blogsList: { type: [ObjectId], required: true },
+        blogsList: { type: [{ _id: ObjectId, name: String }], required: true },
         followers: {
             type: [{ _id: ObjectId, username: String }],
             required: true,
