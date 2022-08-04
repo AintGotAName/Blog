@@ -263,15 +263,27 @@ const save = async (req, res) => {
     console.log(`--- save ---\nSaving a post!\n`);
     try {
         const post = await Blog.findById(req.params.id);
-        req.user.saved.push(post._id);
-        post.saved += 1;
-        await req.user.save();
-        await post.save();
-        res.status(200).json({
-            success: true,
-            msg: `Save a post successfully!`,
-        });
-        console.log(`--- save ---\nSaved!\n`);
+        if (
+            req.user.saved.some(
+                (post) => post._id.toString() === post._id.toString()
+            )
+        ) {
+            res.status(409).json({
+                success: false,
+                msg: `You have already saved this post!`,
+            });
+            console.log(`--- save ---\nAlready saved!\n`);
+        } else {
+            req.user.saved.push({ _id: post._id, name: post.name });
+            post.saved += 1;
+            await req.user.save();
+            await post.save();
+            res.status(200).json({
+                success: true,
+                msg: `Save a post successfully!`,
+            });
+            console.log(`--- save ---\nSaved!\n`);
+        }
     } catch (err) {
         res.status(409).json({
             success: false,
