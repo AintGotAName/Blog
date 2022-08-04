@@ -305,7 +305,7 @@ const unsave = async (req, res) => {
             )
         ) {
             req.user.saved = req.user.saved.filter(
-                (savedPost) => savedPost._id.toString() === post._id.toString()
+                (savedPost) => savedPost._id.toString() !== post._id.toString()
             );
             post.saved -= 1;
             await req.user.save();
