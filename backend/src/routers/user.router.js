@@ -12,6 +12,7 @@ import {
     save,
     unsave,
     likePost,
+    unlike,
     create,
 } from "../controllers/user.controller.js";
 
@@ -28,6 +29,7 @@ UserRouter.post("/login", login)
     .put("/save/:id", save)
     .put("/unsave/:id", unsave)
     .put("/like/:id", likePost)
+    .put("/unlike/:id", unlike)
     .post("/create", create);
 
 export default UserRouter;
