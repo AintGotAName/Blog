@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useFetch = (url, headers, body) => {
+const useFetch = (url, method, headers, body) => {
     const [res, setRes] = useState();
     fetch(url, {
         method: method,
