@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema(
         saved: { type: [{ _id: ObjectId, name: String }], required: true },
         liked: { type: [{ _id: ObjectId, name: String }], required: true },
     },
-    { versionKey: false }
+    { versionKey: false, timestamps: true }
 );
 
 export default mongoose.model("User", UserSchema);
