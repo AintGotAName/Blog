@@ -128,6 +128,7 @@ const myInfo = async (req, res) => {
                 followers: req.user.followers,
                 following: req.user.following,
                 information: req.user.information,
+                joinedAt: req.user.createdAt,
             },
         });
         console.log(`--- myInfo ---\nFound my information!\n`);
