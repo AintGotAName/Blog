@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { RequiredInput } from "../../components/index.js";
 
@@ -78,7 +80,11 @@ const Login = ({ url }) => {
                         );
                     }}
                 >
-                    Toggle see password
+                    {seePassword === "password" ? (
+                        <VisibilityIcon />
+                    ) : (
+                        <VisibilityOffIcon />
+                    )}
                 </button>
                 <button type="submit">Log in</button>
             </form>
