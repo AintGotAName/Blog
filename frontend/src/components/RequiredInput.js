@@ -1,12 +1,13 @@
 import { useState } from "react";
 
-const RequiredInput = ({ validateMessage, inputType }) => {
+const RequiredInput = ({ validateMessage, inputType, placeholder }) => {
     const [text, setText] = useState("");
     return (
         <input
             required
             type={inputType || "text"}
             value={text}
+            placeholder={placeholder}
             onInvalid={(e) => {
                 e.target.setCustomValidity(validateMessage);
             }}
