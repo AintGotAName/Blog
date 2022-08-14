@@ -10,12 +10,12 @@ import styles from "./style.module.css";
 const Login = ({ url }) => {
     const [seePassword, setSeePassword] = useState("password");
     const [message, setMessage] = useState("");
+    const [keepLogIn, setKeepLogIn] = useState(false);
     const [cookies, setCookie] = useCookies(["token"]);
     const navigate = useNavigate();
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(e.target);
 
         try {
             const res = await fetch(url, {
@@ -28,7 +28,7 @@ const Login = ({ url }) => {
             }).then((res) => res.json());
             if (res.success) {
                 setCookie("token", res.token.token, {
-                    maxAge: 60,
+                    maxAge: keepLogIn ? 60 : undefined,
                     path: "/",
                 });
                 navigate("/", { replace: true });
@@ -112,6 +112,10 @@ const Login = ({ url }) => {
                             type="checkbox"
                             name="temp"
                             className={`${styles.checkbox}`}
+                            checked={keepLogIn}
+                            onChange={() => {
+                                setKeepLogIn((prev) => !prev);
+                            }}
                         />
                         <label htmlFor="temp" className={`pd8`}>
                             Remember me?
