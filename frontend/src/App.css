@@ -1,0 +1,29 @@
+* {
+    box-sizing: border-box;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+/* ---------- PADDING ---------- */
+
+.pd8 {
+    padding: 8px;
+}
+
+.pt8 {
+    padding-top: 8px;
+}
+
+.pd16 {
+    padding: 16px;
+}
+
+/* ---------- MARGIN ---------- */
+
+.mg8 {
+    margin: 8px;
+}
+
+.mg32 {
+    margin: 32px;
+}
