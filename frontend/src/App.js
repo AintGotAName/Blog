@@ -1,6 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/login";
 import User from "./pages/user";
+import "./App.css";
+
 const App = () => {
     return (
         <Routes>
