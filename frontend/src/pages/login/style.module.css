@@ -1,0 +1,80 @@
+.page {
+    background-color: #34deeb;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    justify-items: center;
+    display: grid;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    min-width: 300px;
+    border-radius: 30px;
+    width: 50%;
+    box-shadow: 0 0 15px #ccc;
+}
+
+.container__form {
+    display: flex;
+    flex-direction: column;
+}
+
+div > button {
+    background-color: white;
+    border-radius: 50%;
+    border: white;
+}
+
+input {
+    border: none;
+    outline: none;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.container__form_border {
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+}
+
+.container__form_border input {
+    width: 100%;
+}
+
+button[type="button"]:hover {
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+button {
+    align-content: center;
+    justify-content: center;
+    background-color: #34deeb;
+    font-weight: 800;
+}
+
+.error {
+    color: red;
+}
+
+.checkbox {
+    transform: scale(2);
+}
+
+button[type="submit"] {
+    color: white;
+}
+button[type="submit"]:hover {
+    background-color: blue;
+    cursor: pointer;
+}

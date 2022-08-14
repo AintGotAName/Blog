@@ -5,6 +5,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { RequiredInput } from "../../components/index.js";
+import styles from "./style.module.css";
 
 const Login = ({ url }) => {
     const [seePassword, setSeePassword] = useState("password");
@@ -14,7 +15,7 @@ const Login = ({ url }) => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(e.target[0].value);
+        console.log(e.target);
 
         try {
             const res = await fetch(url, {
@@ -58,37 +59,75 @@ const Login = ({ url }) => {
     }, []);
 
     return (
-        <>
-            <form onSubmit={submitHandler}>
-                <label>{message}</label>
-                <label>
-                    Username:
-                    <RequiredInput validateMessage="Please provide username!" />
-                </label>
-                <label>
-                    Password:
-                    <RequiredInput
-                        validateMessage="Please provide password"
-                        inputType={seePassword}
-                    />
-                </label>
-                <button
-                    type="button"
-                    onClick={() => {
-                        setSeePassword(
-                            seePassword === "password" ? "text" : "password"
-                        );
-                    }}
+        // ---------- Login page ----------
+        <div className={`${styles.page}`}>
+            {/* ---------- container ---------- */}
+            <div className={`${styles.container} pd16`}>
+                {/* ---------- login form ---------- */}
+                <form
+                    onSubmit={submitHandler}
+                    className={`${styles.container__form}`}
                 >
-                    {seePassword === "password" ? (
-                        <VisibilityIcon />
-                    ) : (
-                        <VisibilityOffIcon />
+                    {/* ---------- username input ---------- */}
+                    <div className={`pd8 mg8 ${styles.container__form_border}`}>
+                        <RequiredInput
+                            validateMessage="Please provide username!"
+                            placeholder="Username"
+                        />
+                    </div>
+
+                    {/* ---------- password input ---------- */}
+                    <div className={`pd8 mg8 ${styles.container__form_border}`}>
+                        <RequiredInput
+                            validateMessage="Please provide password"
+                            placeholder="Password"
+                            inputType={seePassword}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setSeePassword(
+                                    seePassword === "password"
+                                        ? "text"
+                                        : "password"
+                                );
+                            }}
+                        >
+                            {seePassword === "password" ? (
+                                <VisibilityOffIcon />
+                            ) : (
+                                <VisibilityIcon />
+                            )}
+                        </button>
+                    </div>
+
+                    {/* ---------- error message ---------- */}
+                    {message && (
+                        <label className={`${styles.error}`}>{message}</label>
                     )}
-                </button>
-                <button type="submit">Log in</button>
-            </form>
-        </>
+
+                    {/* ---------- remember login checkbox ---------- */}
+                    <div className={`pd8`}>
+                        <input
+                            type="checkbox"
+                            name="temp"
+                            className={`${styles.checkbox}`}
+                        />
+                        <label htmlFor="temp" className={`pd8`}>
+                            Remember me?
+                        </label>
+                    </div>
+
+                    {/* ---------- login button ---------- */}
+                    <button
+                        type="submit"
+                        className={`pd8 mg8 ${styles.container__form_border}`}
+                    >
+                        Log In
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 };
 
