@@ -27,19 +27,6 @@
     flex-direction: column;
 }
 
-div > button {
-    background-color: white;
-    border-radius: 50%;
-    border: white;
-}
-
-input {
-    border: none;
-    outline: none;
-    font-size: 20px;
-    line-height: 1.5;
-}
-
 .container__form_border {
     border: 1px solid black;
     border-radius: 5px;
@@ -51,16 +38,15 @@ input {
     width: 100%;
 }
 
-button[type="button"]:hover {
-    background-color: #ccc;
-    cursor: pointer;
+.btn {
+    background-color: white;
+    border-radius: 50%;
+    border: white;
 }
 
-button {
-    align-content: center;
-    justify-content: center;
-    background-color: #34deeb;
-    font-weight: 800;
+.btn:hover {
+    background-color: #ccc;
+    cursor: pointer;
 }
 
 .error {
@@ -71,10 +57,18 @@ button {
     transform: scale(2);
 }
 
-button[type="submit"] {
-    color: white;
+.checkbox:hover {
+    cursor: pointer;
 }
-button[type="submit"]:hover {
+
+.submitBtn {
+    color: white;
+    align-content: center;
+    justify-content: center;
+    background-color: #34deeb;
+    font-weight: 800;
+}
+.submitBtn:hover {
     background-color: blue;
     cursor: pointer;
 }

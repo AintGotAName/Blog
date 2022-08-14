@@ -47,7 +47,6 @@ const Login = ({ url }) => {
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log(res);
                 if (res.success) {
                     setCookie("token", cookies.token, {
                         maxAge: 60,
@@ -84,6 +83,7 @@ const Login = ({ url }) => {
                             inputType={seePassword}
                         />
                         <button
+                            className={`${styles.btn}`}
                             type="button"
                             onClick={() => {
                                 setSeePassword(
@@ -125,7 +125,7 @@ const Login = ({ url }) => {
                     {/* ---------- login button ---------- */}
                     <button
                         type="submit"
-                        className={`pd8 mg8 ${styles.container__form_border}`}
+                        className={`pd8 mg8 ${styles.container__form_border} ${styles.submitBtn}`}
                     >
                         Log In
                     </button>
