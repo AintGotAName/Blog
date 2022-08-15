@@ -5,7 +5,7 @@ import { Blog } from "../models/index.js";
 const getBlog = async (req, res) => {
     console.log(`--- getBlog ---\nGetting blog!\n`);
     try {
-        const blog = await Blog.findById(req.params._id);
+        const blog = await Blog.findById(req.params.id);
         if (blog) {
             res.status(200).json({
                 success: true,
