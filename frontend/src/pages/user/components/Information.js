@@ -1,22 +1,46 @@
+import CakeOutlinedIcon from "@mui/icons-material/CakeOutlined";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
+
+import styles from "../styling/Information.module.css";
+
 const Information = ({ username, user, joinedAt }) => {
     const joined = (joinedAt ? new Date(joinedAt) : new Date())
         .toUTCString()
         .split(" ");
     return (
-        <>
-            <h1>{username}</h1>
-            <h2>
-                {user.fields.map(
-                    (field, index) => `
+        <div className={`flex--down center pd16`}>
+            <div className={`${styles.username} flex--right center`}>
+                <h1>{username}</h1>
+            </div>
+            <div className={`flex--right center`}>
+                <h2>
+                    {user.fields.map(
+                        (field, index) => `
                     ${index ? `, ` : ``}
                     ${field}
                     `
-                )}
-            </h2>
-            <h3>Joined: {`${joined[2]} ${joined[1]}, ${joined[3]}`}</h3>
-            <h3>Location: {user.location}</h3>
-            <h3>Email: {user.email}</h3>
-        </>
+                    )}
+                </h2>
+            </div>
+            <div
+                className={`flex--right center`}
+                style={{ width: "100%", justifyContent: "space-evenly" }}
+            >
+                <div className={`flex--right center`}>
+                    <CakeOutlinedIcon />
+                    <h3> {`${joined[2]} ${joined[1]}, ${joined[3]}`}</h3>
+                </div>
+                <div className={`flex--right center`}>
+                    <LocationOnOutlinedIcon />
+                    <h3>{user.location}</h3>
+                </div>
+                <div className={`flex--right center`}>
+                    <EmailOutlinedIcon />
+                    <h3>{user.email}</h3>
+                </div>
+            </div>
+        </div>
     );
 };
 export default Information;
