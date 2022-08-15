@@ -38,3 +38,22 @@ input {
     font-size: 20px;
     line-height: 1.5;
 }
+
+/* ---------- DISPLAY FLEX ---------- */
+
+.flex--right {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex--down {
+    display: flex;
+    flex-direction: column;
+}
+
+.center {
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
