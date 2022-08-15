@@ -26,7 +26,7 @@ const authenticationMiddleware = async (req, res, next) => {
         `--- authenticationMiddleware ---\nAuthentication middleware running\n`
     );
     const token = req.headers.authorization;
-    if (token && token.split(" ")[1].match(/\S+.\S+.\S/)) {
+    if (token !== "undefined" && token.split(" ")[1].match(/\S+.\S+.\S/)) {
         try {
             const payload = jwt.verify(
                 token.split(" ")[1],
