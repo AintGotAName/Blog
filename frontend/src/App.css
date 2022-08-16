@@ -6,6 +6,11 @@
     margin: 0;
 }
 
+:root {
+    --light--main: white;
+    --light--sub: #34deeb;
+}
+
 /* ---------- PADDING ---------- */
 
 .pd8 {
