@@ -1,5 +1,5 @@
 .page {
-    background-color: #34deeb;
+    background-color: var(--light--sub);
     position: absolute;
     top: 0;
     bottom: 0;
@@ -15,7 +15,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: var(--light--main);
     min-width: 300px;
     border-radius: 30px;
     width: 50%;
@@ -62,10 +62,10 @@
 }
 
 .submitBtn {
-    color: white;
+    color: var(--light--main);
     align-content: center;
     justify-content: center;
-    background-color: #34deeb;
+    background-color: var(--light--sub);
     font-weight: 800;
 }
 .submitBtn:hover {
