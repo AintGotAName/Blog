@@ -10,10 +10,10 @@ const Information = ({ username, user, joinedAt }) => {
         .split(" ");
     return (
         <div className={`flex--down center pd16`}>
-            <div className={`${styles.username} flex--right center`}>
+            <div className={`${styles.username} flex--right center mg16`}>
                 <h1>{username}</h1>
             </div>
-            <div className={`flex--right center`}>
+            <div className={`flex--right center mg16`}>
                 <h2>
                     {user.fields.map(
                         (field, index) => `
@@ -24,7 +24,7 @@ const Information = ({ username, user, joinedAt }) => {
                 </h2>
             </div>
             <div
-                className={`flex--right center`}
+                className={`flex--right center mg16`}
                 style={{ width: "100%", justifyContent: "space-evenly" }}
             >
                 <div className={`flex--right center`}>
