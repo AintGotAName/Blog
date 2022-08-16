@@ -2,6 +2,8 @@
     box-sizing: border-box;
     font-size: 20px;
     line-height: 1.5;
+    padding: 0;
+    margin: 0;
 }
 
 /* ---------- PADDING ---------- */
@@ -26,6 +28,10 @@
 
 .mg8 {
     margin: 8px;
+}
+
+.mg16 {
+    margin: 16px;
 }
 
 .mg32 {
