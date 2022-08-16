@@ -8,10 +8,12 @@ const BlogsList = ({ blogs }) => {
         navigate(`/blog/${id}`);
     };
     return (
-        <div className={`${styles.container} flex--down center`}>
+        <div
+            className={`${styles.container} flex--down center mg16 pd16 border`}
+        >
             {blogs.map((blog) => (
                 <div
-                    style={{ width: "100%" }}
+                    className={`${styles.blog} pd8 border`}
                     onClick={() => handler(blog._id)}
                     key={blog._id}
                 >

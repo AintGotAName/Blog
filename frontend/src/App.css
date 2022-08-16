@@ -6,6 +6,8 @@
     margin: 0;
 }
 
+/* ---------- GLOBAL VARIABLE ---------- */
+
 :root {
     --light--main: white;
     --light--sub: #34deeb;
@@ -67,4 +69,9 @@ input {
     align-items: center;
     justify-content: center;
     justify-items: center;
+}
+
+/* ---------- BORDER ---------- */
+.border {
+    border-radius: 5px;
 }

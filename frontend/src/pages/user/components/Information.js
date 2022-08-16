@@ -9,7 +9,7 @@ const Information = ({ username, user, joinedAt }) => {
         .toUTCString()
         .split(" ");
     return (
-        <div className={`flex--down center pd16`}>
+        <div className={`flex--down center pd16 border`}>
             <div className={`${styles.username} flex--right center mg16`}>
                 <h1>{username}</h1>
             </div>

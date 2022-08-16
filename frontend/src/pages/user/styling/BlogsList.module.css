@@ -1,0 +1,10 @@
+.blog {
+    width: 100%;
+    border: 1px solid black;
+    font-weight: 800;
+}
+
+.blog:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
