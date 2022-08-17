@@ -1,24 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import { RequiredInput } from "../../components/index.js";
+import { UrlContext } from "../../Contexts.js";
 import styles from "./style.module.css";
 
-const Login = ({ url }) => {
+const Login = ({}) => {
     const [seePassword, setSeePassword] = useState("password");
     const [message, setMessage] = useState("");
     const [keepLogIn, setKeepLogIn] = useState(false);
     const [cookies, setCookie] = useCookies(["token"]);
     const navigate = useNavigate();
+    const url = useContext(UrlContext);
+    console.log(url);
 
     const submitHandler = async (e) => {
         e.preventDefault();
 
         try {
-            const res = await fetch(url, {
+            const res = await fetch(`${url}/user/login`, {
                 method: "POST",
                 headers: { "content-type": "application/json; charset=utf-8" },
                 body: JSON.stringify({
