@@ -11,6 +11,7 @@
 :root {
     --light--main: white;
     --light--sub: #34deeb;
+    --light--text: black;
 }
 
 /* ---------- PADDING ---------- */
