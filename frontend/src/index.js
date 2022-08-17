@@ -7,11 +7,11 @@ import App from "./App.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <StrictMode>
-        <CookiesProvider>
-            <BrowserRouter>
-                <App />
-            </BrowserRouter>
-        </CookiesProvider>
-    </StrictMode>
+    // <StrictMode>
+    <CookiesProvider>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </CookiesProvider>
+    // </StrictMode>
 );
